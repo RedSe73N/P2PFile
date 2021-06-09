@@ -20,6 +20,7 @@ namespace RS {
 
     class P2PLIB {
     private:
+        int threadNum = 0;
         std::vector<Worker> workers; // thread worker
         void errorFunc(std::string message); // error Message
         void serverFunction();
@@ -28,5 +29,7 @@ namespace RS {
         ~P2PLIB();
         P2PLIB();
         P2PLIB(int n);
+        void startAll();
+        void start(int n);
     };
 }

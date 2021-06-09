@@ -5,7 +5,7 @@ RS::P2PLIB::P2PLIB() {
 }
 
 RS::P2PLIB::P2PLIB(int n){
-    for(int i = 0; i < n; i++){
+    for(int i = 0; i < (threadNum=n); i++){
         Worker __worker = {
             .client = std::thread(clientFunction),
             .server = std::thread(serverFunction)
@@ -16,4 +16,18 @@ RS::P2PLIB::P2PLIB(int n){
 
 RS::P2PLIB::~P2PLIB(){
     //TODO
+}
+
+void RS::P2PLIB::startAll(){
+    start(threadNum);
+}
+
+void RS::P2PLIB::start(int n){
+    #define o(x) \
+        x.client.join(); \
+        x.server.join();
+    for(int i = 0; i < n; i+=2){
+        o(workers[i]);
+    }
+    #undef o
 }
